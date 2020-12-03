@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Tue Jun 30 10:58:50 2020
-
-@author: kwangil_kim1
-"""
-
 
 # get_ipython().system('pip install Image')
 # get_ipython().system('pip install numpy')
@@ -47,12 +41,6 @@ input_set_defect = "R10"
 
 # img_dir : 입력 이미지 상위 경로 
 img_dir = 'D:/CASTING/' + input_set_defect + '/analysis_split_target_image_result'
-# img_dir = 'D:/CPI_image_raw/B0605C/B0605C_image/20200605_214415_test'
-# img_dir = 'D:/CPI_image_raw/B0608F/B0608F_Image/20200608_225258_test'
-# img_dir = 'D:/CPI_image_raw/B0609A/B0609A_image/20200609_101130_test'
-# img_dir = 'D:/CPI_image_raw/B0609B/B0609B_image/20200609_213003_test'
-# img_dir = 'D:/CPI_image_raw/B0610A/B0610A_image/20200610_084852_test'
-# img_dir = 'D:/CPI_image_raw/B0610C/B0610B_image/20200610_203848_test'
 
 # 모델 버전 
 test_ver = '08a'
@@ -67,10 +55,6 @@ np_classes = len(categories)
 # image_h = 256
 image_w = 64
 image_h = 64
-
-
-
-
 
 size_str = str(image_w)
 
@@ -116,8 +100,6 @@ y = []
 
 # 학습 대상 데이터 읽어오기 
 for idx, BW in enumerate(categories):
-    # print(idx)
-    # print(BW)
     img_dir_detail = img_dir + "/result/" + BW + "/"
 
     if idx == 0 :           #idx==0 -> 검출 대상 이미지
@@ -148,14 +130,7 @@ xy = (X_train, X_test, Y_train, Y_test)
 
 
 # 모델 저장 경로 생성 
-# model_dir = img_dir_model + '/model' + test_ver
-# if not os.path.exists(model_dir):
-#     os.mkdir(model_dir)
 model_path = img_dir_model +'/' + model_name
-# if not os.path.exists(model_path):
-#     os.mkdir(model_path)
-
-
 # 모델 load 
 model = load_model( model_path +'/' + model_name + '.h5' )
 
