@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
-
 import schedule 
 import time
 import datetime
@@ -15,12 +12,11 @@ import pickle
 import warnings
 import pymssql
 
-#os.chdir("/0714/")
-connection = pymssql.connect(host='172.17.48.20',
-                       port= '5008',
-                       user ='cms_admin', 
-                       password ='adminCms@508!', 
-                       database='HISTORIAN'
+connection = pymssql.connect(host='',
+                       port= '',
+                       user ='', 
+                       password ='', 
+                       database=''
 )
 
 query = "select B.EQP_NO, C.NAME, A.X_VAR, A.Y_VAR, A.X_RUN_COND, A.Y_RUN_COND from CMS_MODELING A, EQUIPMENT B, PROCESS_LIST C where A.EQP_ID = B.EQP_ID and B.PRCS_ID = C.PRCS_ID"
@@ -50,8 +46,6 @@ sql = sql_first + sql_last
 sulbi_names = db_value['설비'].drop_duplicates()
 
 
-# In[3]:
-
 
 current = datetime.datetime.now()
 current_date = current.strftime('%Y-%m-%d %H:%M:%S')
@@ -59,20 +53,6 @@ print("Current Time = " , current_date)
 yesterday = current - datetime.timedelta(days = 1)
 model_check = yesterday.strftime('%Y%m%d')
 
-
-# In[4]:
-
-
-model_check
-
-
-# In[ ]:
-
-
-
-
-
-# In[2]:
 
 
 def job():
@@ -92,11 +72,11 @@ def job():
     ##################################################
     start = time.time()
     ##################################### influx DB 테스트용 ###############################
-    def get_ifdb_cms(db, host='172.17.48.31', port=8086, user='python', passwd='python123'):
+    def get_ifdb_cms(db, host='', port=, user='', passwd=''):
         client = DataFrameClient(host, port, user, passwd, db)
         return client
 
-    ifdb = get_ifdb_cms(db='pis')
+    ifdb = get_ifdb_cms(db='')
     result = ifdb.query(sql)
     column = next(iter(result))
     output_table   = result[column]
@@ -180,11 +160,11 @@ def job():
     't5s','t10s','t15s','t30s','t1m','t5m','t10m','t30m','t1h','t12h','t1d'
     ]))
     
-    db1= 'pis' 
-    host1='172.17.48.31' 
-    port1= 8086 
-    user1='python' 
-    passwd1='python123'
+    db1= '' 
+    host1='' 
+    port1= 
+    user1='' 
+    passwd1=''
     insert_data = DataFrameClient(host1, port1, user1, passwd1, db1)
 
     grouped = gogo_pv.groupby(['t5s','t10s','t15s','t30s','t1m','t5m','t10m','t30m','t1h','t12h','t1d'])
@@ -192,7 +172,7 @@ def job():
         tag1, tag2, tag3, tag4, tag5, tag6, tag7, tag8, tag9, tag10, tag11= group
         tags = dict(t5s=tag1,t10s=tag2,t15s=tag3,t30s=tag4,t1m=tag5,t5m=tag6,t10m=tag7,t30m=tag8,t1h=tag9,t12h=tag10,t1d=tag11)
         sub_df = gogo_pv.groupby(['t5s','t10s','t15s','t30s','t1m','t5m','t10m','t30m','t1h','t12h','t1d']).get_group(group)[feature_columns]
-        #insert_data.write_points(sub_df, 'EDGE_TAG_HISTORY_TS', tags=tags)
+        insert_data.write_points(sub_df, 'EDGE_TAG_HISTORY_TS', tags=tags)
     ##############################################################################################
     print("Insert Data Time :", time.time() - start)  # 현재시각 - 시작시간 = 실행 시간
 
