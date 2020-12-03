@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Tue Jun 30 10:58:50 2020
-
-@author: kwangil_kim1
-"""
-
 
 # get_ipython().system('pip install Image')
 # get_ipython().system('pip install numpy')
@@ -46,13 +40,6 @@ input_set_defect = "R10"
 
 # img_dir : 입력 이미지 상위 경로 
 img_dir = 'D:/CASTING/' + input_set_defect + '/new_split_image'
-# img_dir = 'D:/CPI_image_raw/B0605C/B0605C_image/20200605_214415_test'
-# img_dir = 'D:/CPI_image_raw/B0608F/B0608F_Image/20200608_225258_test'
-# img_dir = 'D:/CPI_image_raw/B0609A/B0609A_image/20200609_101130_test'
-# img_dir = 'D:/CPI_image_raw/B0609B/B0609B_image/20200609_213003_test'
-# img_dir = 'D:/CPI_image_raw/B0610A/B0610A_image/20200610_084852_test'
-# img_dir = 'D:/CPI_image_raw/B0610C/B0610B_image/20200610_203848_test'
-
 
 # 모델 버전 
 test_ver = '08a'
@@ -68,10 +55,6 @@ np_classes = len(categories)
 # image_h = 256
 image_w = 64
 image_h = 64
-
-
-
-
 
 size_str = str(image_w)
 
@@ -116,8 +99,6 @@ y = []
 
 # 학습 대상 데이터 읽어오기 
 for idx, BW in enumerate(categories):
-    # print(idx)
-    # print(BW)
     img_dir_detail = img_dir + "/" + input_set_defect + "_split/" + BW + "/"
 
     if idx == 0 :           #idx==0 -> 검출 대상 이미지
@@ -151,27 +132,16 @@ def mkdir(path):
         os.mkdir(path)
         
 # 모델 저장 경로 생성 
-# model_dir = img_dir_model + '/model' + test_ver
-# if not os.path.exists(model_dir):
-#     os.mkdir(model_dir)
 mkdir('D:/CPI_model')
 mkdir(img_dir_model0)
 mkdir(img_dir_model)
 
 
-# model_path = img_dir_model +'/' + model_name
-# if not os.path.exists(model_path):
-#     os.mkdir(model_path)
-
 model_path = img_dir_model +'/' + model_name
 mkdir(model_path)
 
-# if os.path.exists(model_path + '/numpy_data' + test_ver) is False:
-#     os.mkdir(model_path + '/numpy_data' + test_ver)
-# np.save(model_path + "/numpy_data" + test_ver + "/" + model_name + ".npy", xy)
 
 mkdir(model_path + '/numpy_data' + test_ver)
-# np.save(model_path + "/numpy_data" + test_ver + "/" + model_name + ".npy", xy)
 
 X_train = X_train.astype('float32') / 255
 X_test = X_test.astype('float32') / 255
@@ -179,7 +149,6 @@ X = X.astype('float32') / 255
 
 # 모델 생성 
 model = Sequential() 
-# model.add(Conv2D(32, (3,3), padding="same", input_shape=X_train.shape[1:], activation="relu"))
 model.add(Conv2D(32, (3,3), padding="same", input_shape=X.shape[1:], activation="relu"))
 model.add(MaxPooling2D(pool_size=(2,2)))
 model.add(Conv2D(32, (3,3), padding="same", activation="relu"))
@@ -199,8 +168,6 @@ model.add(Dropout(0.5))
 model.add(Dense(1, activation="sigmoid"))
 
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-
-
 
 # 모델 체크 포인트 설정 
 checkpoint = ModelCheckpoint(filepath=model_path, monitor='val_loss', verbose=1, save_best_only=True)
@@ -261,6 +228,3 @@ try:
     shutil.rmtree(img_dir + '/' + input_set_defect + "_split")
 except:
     print(img_dir + '/' + input_set_defect + "_split" + " : 삭제할 경로가 없습니다")
-
-
-
