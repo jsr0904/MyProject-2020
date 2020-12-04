@@ -132,16 +132,27 @@ def mkdir(path):
         os.mkdir(path)
         
 # 모델 저장 경로 생성 
+# model_dir = img_dir_model + '/model' + test_ver
+# if not os.path.exists(model_dir):
+#     os.mkdir(model_dir)
 mkdir('D:/CPI_model')
 mkdir(img_dir_model0)
 mkdir(img_dir_model)
 
 
+# model_path = img_dir_model +'/' + model_name
+# if not os.path.exists(model_path):
+#     os.mkdir(model_path)
+
 model_path = img_dir_model +'/' + model_name
 mkdir(model_path)
 
+# if os.path.exists(model_path + '/numpy_data' + test_ver) is False:
+#     os.mkdir(model_path + '/numpy_data' + test_ver)
+# np.save(model_path + "/numpy_data" + test_ver + "/" + model_name + ".npy", xy)
 
 mkdir(model_path + '/numpy_data' + test_ver)
+# np.save(model_path + "/numpy_data" + test_ver + "/" + model_name + ".npy", xy)
 
 X_train = X_train.astype('float32') / 255
 X_test = X_test.astype('float32') / 255
