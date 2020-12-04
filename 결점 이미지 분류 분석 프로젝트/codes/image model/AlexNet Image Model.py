@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
-
 import cv2
 import os
 import glob
@@ -20,9 +17,6 @@ import matplotlib.pyplot as plt
 img_dir = 'C:/cpi_image_test2'
 categories = ['BW_image', 'no_BW_image']
 np_classes = len(categories)
-
-
-# In[15]:
 
 
 from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array, load_img
@@ -44,9 +38,6 @@ files = glob.glob(img_dir_detail + '*.png')
 save_to_dir = 'C:/cpi_image_test2/BW_image'
 
 
-# In[ ]:
-
-
 ## DATA Argumentation 
 for i, f in enumerate(files):
     png_name = ''.join(f.split()).split('\\')[1][:-4]
@@ -61,9 +52,6 @@ for i, f in enumerate(files):
         i += 1
         if i > 10:
             break
-
-
-# In[16]:
 
 
 image_w = 256
@@ -92,14 +80,9 @@ for idx, BW in enumerate(categories):
             print(BW, str(i)+" 번째에서 에러 ")
 
 
-# In[ ]:
-
-
 X = np.array(X)
 Y = np.array(y)
 
-
-# In[19]:
 
 
 from sklearn.model_selection import train_test_split
@@ -111,8 +94,6 @@ if os.path.exists('C:/cpi_image_test2/numpy_data_gray') is False:
     os.mkdir('C:/cpi_image_test2/numpy_data_gray')
 np.save("C:/cpi_image_test2/numpy_data/binary_image_data_gray.npy", xy)
 
-
-# In[23]:
 
 
 from tensorflow.keras.models import Sequential
@@ -133,25 +114,6 @@ print(np.bincount(y_test))
 X_train = X_train.reshape(X_train.shape[0], 256, 256, 1).astype('float32') / 255
 X_test = X_test.reshape(X_test.shape[0], 256, 256, 1).astype('float32') / 255
 
-# X_train = X_train.astype('float32') / 255
-# X_test = X_test.astype('float32') / 255
-
-
-# In[25]:
-
-
-X_train.shape
-
-
-# In[26]:
-
-
-X_train
-
-
-# In[27]:
-
-
 from tensorflow.keras.layers import Input
 from tensorflow.keras.layers import Conv2D, MaxPooling2D,Convolution2D
 from tensorflow.keras.layers import Flatten
@@ -162,9 +124,6 @@ from tensorflow.keras.regularizers import l2
 from tensorflow.keras.activations import relu
 from tensorflow.keras.optimizers import Adam,RMSprop,SGD
 from tensorflow.keras.models import Model
-
-
-# In[28]:
 
 
 #INPUT
@@ -256,10 +215,6 @@ model.summary()
 # classifier.add(Dense(units = 1, activation = 'sigmoid'))
 # classifier.summary()
 
-
-# In[31]:
-
-
 # checkpoint
 checkpoint_path = 'C:/cpi_image_test2/model/checkpoint_AlexNet__blackwhite.ckpt'
 
@@ -288,32 +243,11 @@ callback_list = [
         )]
 
 
-# In[32]:
-
 
 model.fit(X_train, y_train, batch_size=64, epochs=25, validation_split=0.15,  callbacks= callback_list)
 
-
-# In[33]:
-
-
 model.load_weights(checkpoint_path)
-
-
-# In[34]:
-
 
 print("정확도 : %.2f " %(model.evaluate(X_test, y_test)[1]))
 
-
-# In[35]:
-
-
 model.save("C:/cpi_image_test2/model/AlexNet_blackwhite.h5")
-
-
-# In[ ]:
-
-
-
-
