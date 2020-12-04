@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[64]:
-
-
 import cv2
 import os
 import glob
@@ -20,10 +17,6 @@ import matplotlib.pyplot as plt
 img_dir = 'C:/cpi_image_test2'
 categories = ['BW_image', 'no_BW_image']
 np_classes = len(categories)
-
-
-# In[15]:
-
 
 from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array, load_img
 data_aug_gen = ImageDataGenerator(
@@ -43,10 +36,6 @@ img_dir_detail = img_dir + "/" + "BW_image" + "/"
 files = glob.glob(img_dir_detail + '*.png')
 save_to_dir = 'C:/cpi_image_test2/BW_image'
 
-
-# In[ ]:
-
-
 ## DATA Argumentation 
 for i, f in enumerate(files):
     png_name = ''.join(f.split()).split('\\')[1][:-4]
@@ -61,10 +50,6 @@ for i, f in enumerate(files):
         i += 1
         if i > 10:
             break
-
-
-# In[16]:
-
 
 image_w = 256
 image_h = 256
@@ -91,16 +76,8 @@ for idx, BW in enumerate(categories):
         except:
             print(BW, str(i)+" 번째에서 에러 ")
 
-
-# In[17]:
-
-
 X = np.array(X)
 Y = np.array(y)
-
-
-# In[19]:
-
 
 from sklearn.model_selection import train_test_split
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.1)
@@ -110,10 +87,6 @@ xy = (X_train, X_test, Y_train, Y_test)
 if os.path.exists('C:/cpi_image_test2/numpy_data_gray') is False:
     os.mkdir('C:/cpi_image_test2/numpy_data_gray')
 np.save("C:/cpi_image_test2/numpy_data/binary_image_data_gray.npy", xy)
-
-
-# In[90]:
-
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dense, Flatten, Dropout
@@ -127,23 +100,11 @@ print(np.bincount(y_train))
 print(np.bincount(y_test))
 
 
-# In[91]:
-
-
 X_train = X_train.reshape(X_train.shape[0], 256, 256, 1).astype('float32') / 255
 X_test = X_test.reshape(X_test.shape[0], 256, 256, 1).astype('float32') / 255
 
 # X_train = X_train.astype('float32') / 255
 # X_test = X_test.astype('float32') / 255
-
-
-# In[92]:
-
-
-X_train.shape
-
-
-# In[93]:
 
 
 from tensorflow.keras.layers import Input,Concatenate,concatenate
@@ -155,9 +116,6 @@ from tensorflow.keras.layers import GlobalAveragePooling2D,ZeroPadding2D,Add,Ave
 from tensorflow.keras.layers import Dense,Flatten,Dropout
 from tensorflow.keras.models import Model
 from tensorflow.keras.regularizers import l2
-
-
-# In[94]:
 
 
 def get_resnet():
@@ -233,10 +191,6 @@ def get_resnet():
 
     return model
 
-
-# In[95]:
-
-
 res = get_resnet()
 
 from tensorflow.keras.optimizers import Adam,RMSprop,SGD
@@ -245,10 +199,6 @@ optimizer = SGD(lr=0.01,decay = 5e-4, momentum=0.9)
 res.compile(loss='binary_crossentropy',optimizer=optimizer,metrics=['acc'])
 
 res.summary()
-
-
-# In[100]:
-
 
 # checkpoint
 checkpoint_path = 'C:/cpi_image_test2/model/checkpoint_resnet20_ver1.ckpt'
@@ -277,29 +227,10 @@ callback_list = [
             patience=patient
         )]
 
-
-# In[101]:
-
-
 res.fit(X_train, y_train, batch_size=64, epochs=20, validation_split=0.15,  callbacks= callback_list)
 
 res.load_weights(checkpoint_path)
 
-
-# In[102]:
-
-
 print("정확도 : %.2f " %(res.evaluate(X_test, y_test)[1]))
 
-
-# In[103]:
-
-
 res.save("C:/cpi_image_test2/model/resnet20_ver1.h5")
-
-
-# In[ ]:
-
-
-
-
