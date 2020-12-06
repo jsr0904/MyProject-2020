@@ -3,7 +3,11 @@
 
 1. Machine Learning
     * 설비 이상 감지 분석
-      * 사용언어 : python
+      * Develop Language : python
+      * Analysis Tool : keras, tensorflow
       
 2. Deep Learning
-    * 이미지 분류 분석 
+    * 이미지 분류 분석
+      * Develop Language : python
+      * Analysis Tool : keras, tensorflow
+ 
