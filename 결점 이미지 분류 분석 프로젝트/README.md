@@ -2,6 +2,7 @@
 CNN 딥러닝 모델을 사용하여 오분류(misclassification) 된 결점 이미지를 정분류 하는 프로젝트
 
 ## 결점 이미지 분류 시스템 구상도
+<img src= width="700" height="370">
 
 ## 분석 내용
 
