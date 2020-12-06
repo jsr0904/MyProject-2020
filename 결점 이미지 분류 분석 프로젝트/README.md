@@ -2,7 +2,25 @@
 * CNN 딥러닝 모델을 사용하여 오분류(misclassification) 된 결점 이미지를 정분류 하는 프로젝트
 
 ## 결점 이미지 분류 시스템 구상도
-<img src= https://github.com/jsr0904/MyProject-2020/blob/main/%EA%B2%B0%EC%A0%90%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EB%B6%84%EB%A5%98%20%EB%B6%84%EC%84%9D%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EB%B6%84%EB%A5%98%20%EB%B6%84%EC%84%9D%20%EB%AA%A8%EB%8D%B8%20%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4%20%EA%B5%AC%EC%83%81%EB%8F%84.png width="800" height="370">
+<img src= https://github.com/jsr0904/MyProject-2020/blob/main/%EA%B2%B0%EC%A0%90%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EB%B6%84%EB%A5%98%20%EB%B6%84%EC%84%9D%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EB%B6%84%EB%A5%98%20%EB%B6%84%EC%84%9D%20%EB%AA%A8%EB%8D%B8%20%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4.png width="800" height="370">
+
+## 결점 이미지 분류 시스템 작동 방법
+1. 이미지 데이터 정리.py
+    * 초기 신규 학습을 위한 이미지 데이터 나누기
+    * 구분할 이미지를 지정한 csv 파일 필요
+
+2. 이미지 분류 모델.py
+    * 분류 모델 추가시, 초기 1회에 한해 이미지 분류 모델 생성
+    * Data Augmentation : 이미지 확대 (1 ~ 2배) 및 위치이동 (0~30%) 적용 이미지 학습
+    * 최대 1000회 fitting 을 3회 학습
+    * 추가 학습 : 최신 학습된 모델을 load , 최대 1000회 fitting을 2회 추가 학습 ( 분류 모델의 최종 결과)
+
+3. 분류.py
+    * 최신 학습된 분류 모델을 load
+    * 이미지 판별 분류 후, 분류 결과를 csv 파일에 write
+    
+4. 신규 이미지 분류 모델.py
+    * 새로운 분류 대상에 대한 분류 모델 생성
 
 ## 분석 내용
 * 결점 검출기의 출력 데이터(결점정보, 결점이미지)를 이용하여, 잘못 분류된 결점을 자동으로 재 분류하는 방법론으로 기획
