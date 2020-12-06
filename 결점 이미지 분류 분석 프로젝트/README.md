@@ -28,7 +28,7 @@
 * 총 6개의 생산 제품을 추출하여, 5개 생산 제품의 결점 이미지를 학습하고 1개 생산 제품에서 발생한 결점 이미지로 학습 방법의 적합성 및 분류의 정밀도를 검정
 
 ## 모델 설계
-<img src= hhttps://github.com/jsr0904/MyProject-2020/blob/main/%EA%B2%B0%EC%A0%90%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EB%B6%84%EB%A5%98%20%EB%B6%84%EC%84%9D%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/cnn%20%EB%AA%A8%EB%8D%B8%20%EC%84%A4%EA%B3%84.png width="800" height="370">
+<img src= https://github.com/jsr0904/MyProject-2020/blob/main/%EA%B2%B0%EC%A0%90%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EB%B6%84%EB%A5%98%20%EB%B6%84%EC%84%9D%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/cnn%20%EB%AA%A8%EB%8D%B8%20%EC%84%A4%EA%B3%84.png>
 
 ## 분석 결과 및 현장 적용
 * 분류 모델의 Accuracy : 99.76 %
